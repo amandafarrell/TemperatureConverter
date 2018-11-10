@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TemperatureConverter</string>
+
+    <string name="label_kelvin">K</string>
+    <string name="label_fahrenheit">°F</string>
+    <string name="label_celsius">°C</string>
+
+    <string name="large_number_error_toast">Error: number is too large</string>
+</resources>
