@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
 import android.widget.EditText;
 
 import java.text.DecimalFormat;
@@ -25,9 +26,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //Find Views
-        mKelvinEditText = findViewById(R.id.edit_text_kelvin);
-        mCelsiusEditText = findViewById(R.id.edit_text_celsius);
-        mFahrenheitEditText = findViewById(R.id.edit_text_fahrenheit);
+        mKelvinEditText = (EditText) findViewById(R.id.edit_text_kelvin);
+        mCelsiusEditText = (EditText) findViewById(R.id.edit_text_celsius);
+        mFahrenheitEditText = (EditText) findViewById(R.id.edit_text_fahrenheit);
 
         //Set views to default values
         mKelvinEditText.setText(formatUnit(mKelvin));
@@ -43,6 +44,34 @@ public class MainActivity extends AppCompatActivity {
         mKelvinEditText.addTextChangedListener(kelvinTextWatcher);
         mCelsiusEditText.addTextChangedListener(celsiusTextWatcher);
         mFahrenheitEditText.addTextChangedListener(fahrenheitTextWatcher);
+
+        //Format the EditTexts when they lose focus
+        mKelvinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus){
+                    mKelvinEditText.setText(formatUnit(mKelvin));
+                }
+            }
+        });
+
+        mCelsiusEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus){
+                    mCelsiusEditText.setText(formatUnit(mCelsius));
+                }
+            }
+        });
+
+        mFahrenheitEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus){
+                    mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                }
+            }
+        });
     }
 
     private TextWatcher kelvinTextWatcher = new TextWatcher() {
