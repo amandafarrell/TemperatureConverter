@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TemperatureConverter</string>
+    <string name="app_name">Temperature Converter</string>
 
     <string name="label_kelvin">K</string>
     <string name="label_fahrenheit">°F</string>
