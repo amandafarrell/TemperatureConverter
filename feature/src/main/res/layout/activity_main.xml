@@ -53,6 +53,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/edit_text_rankine" />
 
+    <TextView
+        android:id="@+id/label_delisle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/edit_text_delisle"
+        android:text="@string/label_delisle"
+        app:layout_constraintBottom_toBottomOf="@id/edit_text_delisle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_text_delisle" />
+
     <!--EditTexts-->
     <EditText
         android:id="@+id/edit_text_kelvin"
@@ -90,5 +101,14 @@
         android:inputType="numberSigned|numberDecimal"
         app:layout_constraintRight_toLeftOf="@id/label_rankine"
         app:layout_constraintTop_toBottomOf="@id/edit_text_fahrenheit" />
+
+    <EditText
+        android:id="@+id/edit_text_delisle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="numberSigned|numberDecimal"
+        app:layout_constraintRight_toLeftOf="@id/label_delisle"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_rankine" />
 
 </android.support.constraint.ConstraintLayout>

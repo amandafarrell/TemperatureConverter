@@ -24,11 +24,13 @@ public class MainActivity extends AppCompatActivity {
     private double mCelsius = 0;
     private double mFahrenheit = 32;
     private double mRankine = 491.67;
+    private double mDelisle = 150;
 
     private EditText mKelvinEditText;
     private EditText mCelsiusEditText;
     private EditText mFahrenheitEditText;
     private EditText mRankineEditText;
+    private EditText mDelisleEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,24 +52,28 @@ public class MainActivity extends AppCompatActivity {
         mCelsiusEditText = (EditText) findViewById(R.id.edit_text_celsius);
         mFahrenheitEditText = (EditText) findViewById(R.id.edit_text_fahrenheit);
         mRankineEditText = (EditText) findViewById(R.id.edit_text_rankine);
+        mDelisleEditText = (EditText) findViewById(R.id.edit_text_delisle);
 
         //Set views to default values
         mKelvinEditText.setText(formatUnit(mKelvin));
         mCelsiusEditText.setText(formatUnit(mCelsius));
         mFahrenheitEditText.setText(formatUnit(mFahrenheit));
         mRankineEditText.setText(formatUnit(mRankine));
+        mDelisleEditText.setText(formatUnit(mDelisle));
 
         //Select all text
         mKelvinEditText.setSelectAllOnFocus(true);
         mCelsiusEditText.setSelectAllOnFocus(true);
         mFahrenheitEditText.setSelectAllOnFocus(true);
         mRankineEditText.setSelectAllOnFocus(true);
+        mDelisleEditText.setSelectAllOnFocus(true);
 
         //Set TextWatchers
         mKelvinEditText.addTextChangedListener(kelvinTextWatcher);
         mCelsiusEditText.addTextChangedListener(celsiusTextWatcher);
         mFahrenheitEditText.addTextChangedListener(fahrenheitTextWatcher);
         mRankineEditText.addTextChangedListener(rankineTextWatcher);
+        mDelisleEditText.addTextChangedListener(delisleTextWatcher);
 
         //Format the EditTexts when they lose focus
         mKelvinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -102,6 +108,15 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     mRankineEditText.setText(formatUnit(mRankine));
+                }
+            }
+        });
+
+        mDelisleEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    mDelisleEditText.setText(formatUnit(mDelisle));
                 }
             }
         });
@@ -152,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 mCelsiusEditText.setText(formatUnit(mCelsius));
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
                 mRankineEditText.setText(formatUnit(mRankine));
+                mDelisleEditText.setText(formatUnit(mDelisle));
             }
         }
     };
@@ -184,6 +200,7 @@ public class MainActivity extends AppCompatActivity {
                 mKelvinEditText.setText(formatUnit(mKelvin));
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
                 mRankineEditText.setText(formatUnit(mRankine));
+                mDelisleEditText.setText(formatUnit(mDelisle));
             }
         }
     };
@@ -216,6 +233,7 @@ public class MainActivity extends AppCompatActivity {
                 mKelvinEditText.setText(formatUnit(mKelvin));
                 mCelsiusEditText.setText(formatUnit(mCelsius));
                 mRankineEditText.setText(formatUnit(mRankine));
+                mDelisleEditText.setText(formatUnit(mDelisle));
             }
         }
     };
@@ -248,6 +266,40 @@ public class MainActivity extends AppCompatActivity {
                 mKelvinEditText.setText(formatUnit(mKelvin));
                 mCelsiusEditText.setText(formatUnit(mCelsius));
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                mDelisleEditText.setText(formatUnit(mDelisle));
+            }
+        }
+    };
+
+    private TextWatcher delisleTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String editTextString = mDelisleEditText.getText().toString();
+            //don't parse if the string is empty or a negative sign
+            if (editTextString.isEmpty()) {
+                mDelisle = 0;
+            } else if (!editTextString.equals("-")) {
+                mDelisle = Double.valueOf(editTextString);
+            }
+            mDelisleEditText.setSelection(mDelisleEditText.getText().length());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            //don't do anything if the editText is not in focus
+            if (getCurrentFocus() == mDelisleEditText) {
+                //convert to Kelvin and convert to all other units from Kelvin
+                delisleToKelvin();
+                convertAllFromKelvin();
+                //reset views with the new values
+                mKelvinEditText.setText(formatUnit(mKelvin));
+                mCelsiusEditText.setText(formatUnit(mCelsius));
+                mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                mRankineEditText.setText(formatUnit(mRankine));
             }
         }
     };
@@ -261,6 +313,8 @@ public class MainActivity extends AppCompatActivity {
     private void convertAllFromKelvin() {
         mCelsius = mKelvin - 273.15;
         mFahrenheit = (mKelvin * 9 / 5.0) - 459.67;
+        mRankine = mKelvin * 9/5.0;
+        mDelisle = (373.15 - mKelvin) * 3/2.0;
     }
 
     private void celsiusToKelvin() {
@@ -273,5 +327,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void rankineToKelvin() {
         mKelvin = (mRankine)*5/9.0;
+    }
+
+    private void delisleToKelvin() {
+        mKelvin = 373.15 - (mDelisle * 2/3.0);
     }
 }
