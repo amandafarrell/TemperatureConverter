@@ -42,6 +42,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/edit_text_fahrenheit" />
 
+    <TextView
+        android:id="@+id/label_rankine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/edit_text_rankine"
+        android:text="@string/label_rankine"
+        app:layout_constraintBottom_toBottomOf="@id/edit_text_rankine"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_text_rankine" />
+
     <!--EditTexts-->
     <EditText
         android:id="@+id/edit_text_kelvin"
@@ -70,5 +81,14 @@
         android:inputType="numberSigned|numberDecimal"
         app:layout_constraintRight_toLeftOf="@id/label_fahrenheit"
         app:layout_constraintTop_toBottomOf="@id/edit_text_celsius" />
+
+    <EditText
+        android:id="@+id/edit_text_rankine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="numberSigned|numberDecimal"
+        app:layout_constraintRight_toLeftOf="@id/label_rankine"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_fahrenheit" />
 
 </android.support.constraint.ConstraintLayout>

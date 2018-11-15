@@ -23,10 +23,12 @@ public class MainActivity extends AppCompatActivity {
     private double mKelvin = 273.15;
     private double mCelsius = 0;
     private double mFahrenheit = 32;
+    private double mRankine = 491.67;
 
     private EditText mKelvinEditText;
     private EditText mCelsiusEditText;
     private EditText mFahrenheitEditText;
+    private EditText mRankineEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,21 +49,25 @@ public class MainActivity extends AppCompatActivity {
         mKelvinEditText = (EditText) findViewById(R.id.edit_text_kelvin);
         mCelsiusEditText = (EditText) findViewById(R.id.edit_text_celsius);
         mFahrenheitEditText = (EditText) findViewById(R.id.edit_text_fahrenheit);
+        mRankineEditText = (EditText) findViewById(R.id.edit_text_rankine);
 
         //Set views to default values
         mKelvinEditText.setText(formatUnit(mKelvin));
         mCelsiusEditText.setText(formatUnit(mCelsius));
         mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+        mRankineEditText.setText(formatUnit(mRankine));
 
         //Select all text
         mKelvinEditText.setSelectAllOnFocus(true);
         mCelsiusEditText.setSelectAllOnFocus(true);
         mFahrenheitEditText.setSelectAllOnFocus(true);
+        mRankineEditText.setSelectAllOnFocus(true);
 
         //Set TextWatchers
         mKelvinEditText.addTextChangedListener(kelvinTextWatcher);
         mCelsiusEditText.addTextChangedListener(celsiusTextWatcher);
         mFahrenheitEditText.addTextChangedListener(fahrenheitTextWatcher);
+        mRankineEditText.addTextChangedListener(rankineTextWatcher);
 
         //Format the EditTexts when they lose focus
         mKelvinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -87,6 +93,15 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View view, boolean hasFocus) {
                 if (!hasFocus) {
                     mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                }
+            }
+        });
+
+        mRankineEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    mRankineEditText.setText(formatUnit(mRankine));
                 }
             }
         });
@@ -136,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
                 //reset views with the new values
                 mCelsiusEditText.setText(formatUnit(mCelsius));
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                mRankineEditText.setText(formatUnit(mRankine));
             }
         }
     };
@@ -167,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 //reset views with the new values
                 mKelvinEditText.setText(formatUnit(mKelvin));
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                mRankineEditText.setText(formatUnit(mRankine));
             }
         }
     };
@@ -198,6 +215,39 @@ public class MainActivity extends AppCompatActivity {
                 //reset views with the new values
                 mKelvinEditText.setText(formatUnit(mKelvin));
                 mCelsiusEditText.setText(formatUnit(mCelsius));
+                mRankineEditText.setText(formatUnit(mRankine));
+            }
+        }
+    };
+
+    private TextWatcher rankineTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String editTextString = mRankineEditText.getText().toString();
+            //don't parse if the string is empty or a negative sign
+            if (editTextString.isEmpty()) {
+                mRankine = 0;
+            } else if (!editTextString.equals("-")) {
+                mRankine = Double.valueOf(editTextString);
+            }
+            mRankineEditText.setSelection(mRankineEditText.getText().length());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            //don't do anything if the editText is not in focus
+            if (getCurrentFocus() == mRankineEditText) {
+                //convert to Kelvin and convert to all other units from Kelvin
+                rankineToKelvin();
+                convertAllFromKelvin();
+                //reset views with the new values
+                mKelvinEditText.setText(formatUnit(mKelvin));
+                mCelsiusEditText.setText(formatUnit(mCelsius));
+                mFahrenheitEditText.setText(formatUnit(mFahrenheit));
             }
         }
     };
@@ -219,5 +269,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void fahrenheitToKelvin() {
         mKelvin = (mFahrenheit + 459.67) * 5 / 9.0;
+    }
+
+    private void rankineToKelvin() {
+        mKelvin = (mRankine)*5/9.0;
     }
 }
