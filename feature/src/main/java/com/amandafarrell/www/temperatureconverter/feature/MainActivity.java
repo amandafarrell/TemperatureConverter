@@ -1,9 +1,14 @@
 package com.amandafarrell.www.temperatureconverter.feature;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -11,6 +16,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 public class MainActivity extends AppCompatActivity {
+
+    private int mDecimalPlaces = 2;
+    private String mDecimalPattern = "#0.";
 
     private double mKelvin = 273.15;
     private double mCelsius = 0;
@@ -24,6 +32,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //Access the user's preference for decimal places
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        mDecimalPlaces = Integer.parseInt(sharedPreferences.getString(getString(R.string.settings_decimal_places_key),
+                getString(R.string.settings_decimal_places_default)));
+
+        //Create decimal pattern string based on the decimal places int
+        for (int i = 0; i < mDecimalPlaces; i++) {
+            mDecimalPattern += "0";
+        }
 
         //Find Views
         mKelvinEditText = (EditText) findViewById(R.id.edit_text_kelvin);
@@ -49,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mKelvinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus){
+                if (!hasFocus) {
                     mKelvinEditText.setText(formatUnit(mKelvin));
                 }
             }
@@ -58,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mCelsiusEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus){
+                if (!hasFocus) {
                     mCelsiusEditText.setText(formatUnit(mCelsius));
                 }
             }
@@ -67,11 +85,29 @@ public class MainActivity extends AppCompatActivity {
         mFahrenheitEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasFocus) {
-                if (!hasFocus){
+                if (!hasFocus) {
                     mFahrenheitEditText.setText(formatUnit(mFahrenheit));
                 }
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.actions_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private TextWatcher kelvinTextWatcher = new TextWatcher() {
@@ -85,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty
             if (editTextString.isEmpty()) {
                 mKelvin = 0;
-            } else if (!editTextString.equals("-")){
+            } else if (!editTextString.equals("-")) {
                 mKelvin = Double.valueOf(editTextString);
             }
             mKelvinEditText.setSelection(mKelvinEditText.getText().length());
@@ -115,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty
             if (editTextString.isEmpty()) {
                 mCelsius = 0;
-            } else if (!editTextString.equals("-")){
+            } else if (!editTextString.equals("-")) {
                 mCelsius = Double.valueOf(editTextString);
             }
             mCelsiusEditText.setSelection(mCelsiusEditText.getText().length());
@@ -146,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mFahrenheit = 0;
-            } else if (!editTextString.equals("-")){
+            } else if (!editTextString.equals("-")) {
                 mFahrenheit = Double.valueOf(editTextString);
             }
             mFahrenheitEditText.setSelection(mFahrenheitEditText.getText().length());
@@ -168,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
 
     //return the unit as a string formatted as a decimal with two significant digits
     private String formatUnit(double unit) {
-        NumberFormat formatter = new DecimalFormat("#0.00");
+        NumberFormat formatter = new DecimalFormat(mDecimalPattern);
         return String.valueOf(formatter.format(unit));
     }
 

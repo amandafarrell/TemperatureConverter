@@ -1,9 +1,17 @@
 <resources>
     <string name="app_name">Temperature Converter</string>
 
-    <string name="label_kelvin">K</string>
-    <string name="label_fahrenheit">°F</string>
-    <string name="label_celsius">°C</string>
+    <!--Unit labels-->
+    <string name="label_kelvin" translatable="false">K</string>
+    <string name="label_fahrenheit" translatable="false">°F</string>
+    <string name="label_celsius" translatable="false">°C</string>
+
+    <string name="settings_menu_item">Settings</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="settings_decimal_places_label">Number of Decimal Places</string>
+    <string name="settings_decimal_places_key" translatable="false">decimal_places</string>
+    <string name="settings_decimal_places_default" translatable="false">1</string>
 
     <string name="large_number_error_toast">Error: number is too large</string>
 </resources>
