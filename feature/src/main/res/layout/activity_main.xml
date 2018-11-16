@@ -75,6 +75,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/edit_text_newton" />
 
+    <TextView
+        android:id="@+id/label_reaumur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/edit_text_reaumur"
+        android:text="@string/label_reaumur"
+        app:layout_constraintBottom_toBottomOf="@id/edit_text_reaumur"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/edit_text_reaumur" />
+
     <!--EditTexts-->
     <EditText
         android:id="@+id/edit_text_kelvin"
@@ -130,5 +141,14 @@
         android:inputType="numberSigned|numberDecimal"
         app:layout_constraintRight_toLeftOf="@id/label_newton"
         app:layout_constraintTop_toBottomOf="@id/edit_text_delisle" />
+
+    <EditText
+        android:id="@+id/edit_text_reaumur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:imeOptions="actionDone"
+        android:inputType="numberSigned|numberDecimal"
+        app:layout_constraintRight_toLeftOf="@id/label_reaumur"
+        app:layout_constraintTop_toBottomOf="@id/edit_text_newton" />
 
 </android.support.constraint.ConstraintLayout>

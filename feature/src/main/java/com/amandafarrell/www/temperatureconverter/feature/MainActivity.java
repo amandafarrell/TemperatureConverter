@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private double mRankine = 491.67;
     private double mDelisle = 150;
     private double mNewton = 0;
+    private double mReaumur = 0;
 
     private EditText mKelvinEditText;
     private EditText mCelsiusEditText;
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mRankineEditText;
     private EditText mDelisleEditText;
     private EditText mNewtonEditText;
+    private EditText mReaumurEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         mRankineEditText = (EditText) findViewById(R.id.edit_text_rankine);
         mDelisleEditText = (EditText) findViewById(R.id.edit_text_delisle);
         mNewtonEditText = (EditText) findViewById(R.id.edit_text_newton);
+        mReaumurEditText = (EditText) findViewById(R.id.edit_text_reaumur);
 
         //Set views to default values
         mKelvinEditText.setText(formatUnit(mKelvin));
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
         mRankineEditText.setText(formatUnit(mRankine));
         mDelisleEditText.setText(formatUnit(mDelisle));
         mNewtonEditText.setText(formatUnit(mNewton));
+        mReaumurEditText.setText(formatUnit(mReaumur));
 
         //Select all text
         mKelvinEditText.setSelectAllOnFocus(true);
@@ -72,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
         mRankineEditText.setSelectAllOnFocus(true);
         mDelisleEditText.setSelectAllOnFocus(true);
         mNewtonEditText.setSelectAllOnFocus(true);
+        mReaumurEditText.setSelectAllOnFocus(true);
 
         //Set TextWatchers
         mKelvinEditText.addTextChangedListener(kelvinTextWatcher);
@@ -80,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mRankineEditText.addTextChangedListener(rankineTextWatcher);
         mDelisleEditText.addTextChangedListener(delisleTextWatcher);
         mNewtonEditText.addTextChangedListener(newtonTextWatcher);
+        mReaumurEditText.addTextChangedListener(reaumurTextWatcher);
 
         //Format the EditTexts when they lose focus
         mKelvinEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -135,6 +141,15 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        mReaumurEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasFocus) {
+                if (!hasFocus) {
+                    mReaumurEditText.setText(formatUnit(mReaumur));
+                }
+            }
+        });
     }
 
     @Override
@@ -184,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
                 mRankineEditText.setText(formatUnit(mRankine));
                 mDelisleEditText.setText(formatUnit(mDelisle));
                 mNewtonEditText.setText(formatUnit(mNewton));
+                mReaumurEditText.setText(formatUnit(mReaumur));
             }
         }
     };
@@ -218,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
                 mRankineEditText.setText(formatUnit(mRankine));
                 mDelisleEditText.setText(formatUnit(mDelisle));
                 mNewtonEditText.setText(formatUnit(mNewton));
+                mReaumurEditText.setText(formatUnit(mReaumur));
             }
         }
     };
@@ -252,6 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 mRankineEditText.setText(formatUnit(mRankine));
                 mDelisleEditText.setText(formatUnit(mDelisle));
                 mNewtonEditText.setText(formatUnit(mNewton));
+                mReaumurEditText.setText(formatUnit(mReaumur));
             }
         }
     };
@@ -286,6 +304,7 @@ public class MainActivity extends AppCompatActivity {
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
                 mDelisleEditText.setText(formatUnit(mDelisle));
                 mNewtonEditText.setText(formatUnit(mNewton));
+                mReaumurEditText.setText(formatUnit(mReaumur));
             }
         }
     };
@@ -320,6 +339,7 @@ public class MainActivity extends AppCompatActivity {
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
                 mRankineEditText.setText(formatUnit(mRankine));
                 mNewtonEditText.setText(formatUnit(mNewton));
+                mReaumurEditText.setText(formatUnit(mReaumur));
             }
         }
     };
@@ -354,6 +374,42 @@ public class MainActivity extends AppCompatActivity {
                 mFahrenheitEditText.setText(formatUnit(mFahrenheit));
                 mRankineEditText.setText(formatUnit(mRankine));
                 mDelisleEditText.setText(formatUnit(mDelisle));
+                mReaumurEditText.setText(formatUnit(mReaumur));
+            }
+        }
+    };
+
+    private TextWatcher reaumurTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            String editTextString = mReaumurEditText.getText().toString();
+            //don't parse if the string is empty or a negative sign
+            if (editTextString.isEmpty()) {
+                mReaumur = 0;
+            } else if (!editTextString.equals("-")) {
+                mReaumur = Double.valueOf(editTextString);
+            }
+            mReaumurEditText.setSelection(mReaumurEditText.getText().length());
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+            //don't do anything if the editText is not in focus
+            if (getCurrentFocus() == mReaumurEditText) {
+                //convert to Kelvin and convert to all other units from Kelvin
+                reaumurToKelvin();
+                convertAllFromKelvin();
+                //reset views with the new values
+                mKelvinEditText.setText(formatUnit(mKelvin));
+                mCelsiusEditText.setText(formatUnit(mCelsius));
+                mFahrenheitEditText.setText(formatUnit(mFahrenheit));
+                mRankineEditText.setText(formatUnit(mRankine));
+                mDelisleEditText.setText(formatUnit(mDelisle));
+                mNewtonEditText.setText(formatUnit(mNewton));
             }
         }
     };
@@ -370,6 +426,7 @@ public class MainActivity extends AppCompatActivity {
         mRankine = mKelvin * 9/5.0;
         mDelisle = (373.15 - mKelvin) * 3/2.0;
         mNewton = (mKelvin - 273.15)*33/100.0;
+        mReaumur = (mKelvin - 273.15) * 4/5.0;
     }
 
     private void celsiusToKelvin() {
@@ -390,5 +447,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void newtonToKelvin() {
         mKelvin = (mNewton *100/33.0) +273.15;
+    }
+
+    private void reaumurToKelvin() {
+        mKelvin = (mReaumur*5/4.0) + 273.15;
     }
 }
