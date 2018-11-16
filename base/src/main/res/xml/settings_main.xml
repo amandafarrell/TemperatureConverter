@@ -5,6 +5,7 @@
     <EditTextPreference
         android:defaultValue="@string/settings_decimal_places_default"
         android:inputType="number"
+        android:digits="0123456789"
         android:key="@string/settings_decimal_places_key"
         android:selectAllOnFocus="true"
         android:title="@string/settings_decimal_places_label" />
