@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
+    android:fillViewport="true"
     tools:context=".MainActivity">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <!--Labels-->
     <TextView
@@ -171,4 +176,6 @@
         app:layout_constraintRight_toLeftOf="@id/label_romer"
         app:layout_constraintTop_toBottomOf="@id/edit_text_reaumur" />
 
-</android.support.constraint.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>
