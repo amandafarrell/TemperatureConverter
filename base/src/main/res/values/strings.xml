@@ -9,6 +9,7 @@
     <string name="label_delisle" translatable="false">°D</string>
     <string name="label_newton" translatable="false">°N</string>
     <string name="label_reaumur" translatable="false">°Ré</string>
+    <string name="label_romer" translatable="false">°Rø</string>
 
     <string name="settings_menu_item">Settings</string>
     <string name="settings_title">Settings</string>
