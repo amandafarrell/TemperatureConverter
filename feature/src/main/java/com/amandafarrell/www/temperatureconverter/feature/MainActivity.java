@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -45,7 +46,8 @@ public class MainActivity extends AppCompatActivity {
 
         //Access the user's preference for decimal places
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        mDecimalPlaces = Integer.parseInt(sharedPreferences.getString(getString(R.string.settings_decimal_places_key),
+        mDecimalPlaces = Integer.parseInt(
+                sharedPreferences.getString(getString(R.string.settings_decimal_places_key),
                 getString(R.string.settings_decimal_places_default)));
 
         //Create decimal pattern string based on the decimal places int
@@ -196,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty
             if (editTextString.isEmpty()) {
                 mKelvin = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mKelvin = Double.valueOf(editTextString);
             }
             mKelvinEditText.setSelection(mKelvinEditText.getText().length());
@@ -231,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty
             if (editTextString.isEmpty()) {
                 mCelsius = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mCelsius = Double.valueOf(editTextString);
             }
             mCelsiusEditText.setSelection(mCelsiusEditText.getText().length());
@@ -267,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mFahrenheit = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mFahrenheit = Double.valueOf(editTextString);
             }
             mFahrenheitEditText.setSelection(mFahrenheitEditText.getText().length());
@@ -303,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mRankine = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mRankine = Double.valueOf(editTextString);
             }
             mRankineEditText.setSelection(mRankineEditText.getText().length());
@@ -339,7 +341,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mDelisle = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mDelisle = Double.valueOf(editTextString);
             }
             mDelisleEditText.setSelection(mDelisleEditText.getText().length());
@@ -375,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mNewton = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mNewton = Double.valueOf(editTextString);
             }
             mNewtonEditText.setSelection(mNewtonEditText.getText().length());
@@ -411,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mReaumur = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mReaumur = Double.valueOf(editTextString);
             }
             mReaumurEditText.setSelection(mReaumurEditText.getText().length());
@@ -447,7 +449,7 @@ public class MainActivity extends AppCompatActivity {
             //don't parse if the string is empty or a negative sign
             if (editTextString.isEmpty()) {
                 mRomer = 0;
-            } else if (!editTextString.equals("-")) {
+            } else if (!editTextString.equals("-")&&!editTextString.equals(".")&&!editTextString.equals("-.")) {
                 mRomer = Double.valueOf(editTextString);
             }
             mRomerEditText.setSelection(mRomerEditText.getText().length());
@@ -479,6 +481,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void convertAllFromKelvin() {
+        if (mKelvin < 0){
+            Toast.makeText(getBaseContext(), R.string.negative_kelvin_error_toast,
+                    Toast.LENGTH_SHORT).show();
+            mKelvin = 0;
+            convertAllFromKelvin();
+            return;
+        }
+
         mCelsius = mKelvin - 273.15;
         mFahrenheit = (mKelvin * 9 / 5.0) - 459.67;
         mRankine = mKelvin * 9/5.0;

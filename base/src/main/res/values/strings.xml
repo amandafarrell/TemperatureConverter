@@ -18,5 +18,20 @@
     <string name="settings_decimal_places_key" translatable="false">decimal_places</string>
     <string name="settings_decimal_places_default" translatable="false">1</string>
 
+    <!--Decimal place setting labels-->
+    <string name="settings_one_decimal_label" translatable="false">1</string>
+    <string name="settings_two_decimal_label" translatable="false">2</string>
+    <string name="settings_three_decimal_label" translatable="false">3</string>
+    <string name="settings_four_decimal_label" translatable="false">4</string>
+    <string name="settings_five_decimal_label" translatable="false">5</string>
+
+    <!--Decimal place setting values-->
+    <string name="settings_one_decimal_value" translatable="false">1</string>
+    <string name="settings_two_decimal_value" translatable="false">2</string>
+    <string name="settings_three_decimal_value" translatable="false">3</string>
+    <string name="settings_four_decimal_value" translatable="false">4</string>
+    <string name="settings_five_decimal_value" translatable="false">5</string>
+
     <string name="large_number_error_toast">Error: number is too large</string>
+    <string name="negative_kelvin_error_toast">Error: cannot set temperature below absolute zero</string>
 </resources>
