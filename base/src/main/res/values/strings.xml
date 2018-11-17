@@ -16,7 +16,7 @@
 
     <string name="settings_decimal_places_label">Number of Decimal Places</string>
     <string name="settings_decimal_places_key" translatable="false">decimal_places</string>
-    <string name="settings_decimal_places_default" translatable="false">1</string>
+    <string name="settings_decimal_places_default" translatable="false">2</string>
 
     <!--Decimal place setting labels-->
     <string name="settings_one_decimal_label" translatable="false">1</string>
