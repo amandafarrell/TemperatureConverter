@@ -32,6 +32,7 @@
     <string name="settings_four_decimal_value" translatable="false">4</string>
     <string name="settings_five_decimal_value" translatable="false">5</string>
 
+    <!--Error messages-->
     <string name="large_number_error_toast">Error: number is too large</string>
     <string name="negative_kelvin_error_toast">Error: cannot set temperature below absolute zero</string>
 </resources>
