@@ -10,7 +10,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="aia-compat-api-min-version"
-            android:value="1" />
+            android:value="2" />
     </application>
 
 </manifest>
