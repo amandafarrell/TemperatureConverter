@@ -24,10 +24,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         @Override
         public void onCreatePreferences(Bundle bundle, String s) {
-            addPreferencesFromResource(R.xml.settings_main);
+            addPreferencesFromResource(com.amandafarrell.www.temperatureconverter.R.xml.settings_main);
 
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            onSharedPreferenceChanged(sharedPreferences, getString(R.string.settings_decimal_places_key));
+            onSharedPreferenceChanged(sharedPreferences, getString(com.amandafarrell.www.temperatureconverter.R.string.settings_decimal_places_key));
         }
 
         @Override

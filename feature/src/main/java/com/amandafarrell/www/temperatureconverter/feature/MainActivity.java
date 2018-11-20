@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         //Access the user's preference for decimal places
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         mDecimalPlaces = Integer.parseInt(
-                sharedPreferences.getString(getString(R.string.settings_decimal_places_key),
-                getString(R.string.settings_decimal_places_default)));
+                sharedPreferences.getString(getString(com.amandafarrell.www.temperatureconverter.R.string.settings_decimal_places_key),
+                getString(com.amandafarrell.www.temperatureconverter.R.string.settings_decimal_places_default)));
 
         //Create decimal pattern string based on the decimal places int
         for (int i = 0; i < mDecimalPlaces; i++) {
@@ -171,14 +171,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(com.amandafarrell.www.temperatureconverter.R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.actions_settings) {
+        if (id == com.amandafarrell.www.temperatureconverter.R.id.actions_settings) {
             Intent settingsIntent = new Intent(this, SettingsActivity.class);
             startActivity(settingsIntent);
             return true;
@@ -482,7 +482,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void convertAllFromKelvin() {
         if (mKelvin < 0){
-            Toast.makeText(getBaseContext(), R.string.negative_kelvin_error_toast,
+            Toast.makeText(getBaseContext(), com.amandafarrell.www.temperatureconverter.R.string.negative_kelvin_error_toast,
                     Toast.LENGTH_SHORT).show();
             mKelvin = 0;
             convertAllFromKelvin();
